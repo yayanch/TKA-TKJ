@@ -3,7 +3,8 @@ export interface BrandingConfig {
   appShortName: string;
   logoText: string;
   logoUrl: string;
-  logoIcon: string; // Add this
+  logoIcon: string;
+  fontStyle: string; // Add this
   faviconUrl: string;
   headerBadge: string;
 }
@@ -15,7 +16,8 @@ export const DEFAULT_BRANDING_CONFIG: BrandingConfig = {
   appShortName: 'TKA SMK TJKT',
   logoText: 'TK',
   logoUrl: '',
-  logoIcon: '', // Default empty
+  logoIcon: '',
+  fontStyle: 'font-sans', // Default
   faviconUrl: '',
   headerBadge: 'Bank 400 Soal & Pembahasan',
 };
@@ -63,6 +65,12 @@ export function applyBrandingToDOM(config: BrandingConfig): void {
     if (config.logoUrl) {
       const logoImg = document.getElementById('navbar-logo-img') as HTMLImageElement;
       if (logoImg) logoImg.src = config.logoUrl;
+    }
+
+    // Apply font style
+    if (config.fontStyle) {
+      document.documentElement.className = document.documentElement.className.replace(/font-\w+/g, '');
+      document.documentElement.classList.add(config.fontStyle);
     }
   } catch (e) {
     console.error('Error applying branding to DOM:', e);

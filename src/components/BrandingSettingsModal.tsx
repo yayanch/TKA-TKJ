@@ -217,6 +217,25 @@ export const BrandingSettingsModal: React.FC<BrandingSettingsModalProps> = ({
           </div>
 
           <div className="space-y-1.5">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+              <span>Gaya Font Aplikasi</span>
+            </label>
+            <select
+              value={config.fontStyle}
+              onChange={(e) => handleChange('fontStyle', e.target.value)}
+              className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
+            >
+              <option value="font-sans">1. Sans Serif (Modern)</option>
+              <option value="font-serif">2. Serif (Klasik)</option>
+              <option value="font-mono">3. Monospace (Teknis)</option>
+              <option value="font-inter">4. Inter (Clean)</option>
+              <option value="font-poppins">5. Poppins (Rapi)</option>
+              <option value="font-roboto">6. Roboto (Standar)</option>
+            </select>
+          </div>
+
+          <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
               Judul Lengkap Aplikasi (Browser Title)
             </label>
