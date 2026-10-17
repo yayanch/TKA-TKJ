@@ -72,59 +72,57 @@ export const HomeOverviewView: React.FC<HomeOverviewViewProps> = ({
     );
   }
 
-  // Public Hero Banner (Only shown for guest visitors before login)
+  // Public Hero Banner (Only shown for guest visitors before login - Full Page without space)
   return (
-    <div className="pb-16">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 border border-slate-800 text-white p-6 sm:p-10 lg:p-12 shadow-xl">
+    <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-6 sm:-mt-8 min-h-[calc(100vh-4rem)] flex flex-col justify-center">
+      {/* Full Page Hero Section */}
+      <section className="relative overflow-hidden w-full min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 sm:p-12 lg:p-16 flex flex-col justify-center shadow-2xl">
         {/* Subtle Decorative Background Circles */}
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-10 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 -mb-20 w-[450px] h-[450px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
         {/* TJKT Decorative Background Watermarks */}
-        <div className="absolute -right-8 -bottom-8 pointer-events-none select-none text-blue-400/10 transition-all">
-          <Network className="w-80 h-80 sm:w-96 sm:h-96 stroke-[1] transform rotate-12" />
+        <div className="absolute -right-12 -bottom-12 pointer-events-none select-none text-blue-400/10 transition-all">
+          <Network className="w-96 h-96 sm:w-[520px] sm:h-[520px] stroke-[1] transform rotate-12" />
         </div>
-        <div className="absolute right-1/3 -top-12 pointer-events-none select-none text-indigo-400/5 hidden md:block">
-          <Server className="w-64 h-64 stroke-[1] transform -rotate-12" />
+        <div className="absolute right-1/3 -top-16 pointer-events-none select-none text-indigo-400/5 hidden md:block">
+          <Server className="w-80 h-80 stroke-[1] transform -rotate-12" />
         </div>
-        <div className="absolute left-1/2 bottom-2 pointer-events-none select-none text-emerald-400/5 hidden lg:block">
-          <Wifi className="w-48 h-48 stroke-[1]" />
+        <div className="absolute left-1/2 bottom-4 pointer-events-none select-none text-emerald-400/5 hidden lg:block">
+          <Wifi className="w-64 h-64 stroke-[1]" />
         </div>
 
-        <div className="relative z-10 max-w-4xl space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
-            <GraduationCap className="w-4 h-4 text-blue-400" />
+        <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8 my-auto">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30 backdrop-blur-xs">
+            <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
             <span>{config.badge}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight sm:leading-tight">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-tight max-w-5xl">
             {config.title}
           </h1>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-3xl whitespace-pre-line">
+          <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed max-w-4xl whitespace-pre-line font-normal">
             {config.description}
           </p>
 
-
-
-          {/* Stats Bar */}
-          <div className="pt-6 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-4 text-left">
-            <div>
-              <span className="block text-2xl sm:text-3xl font-black text-white">{config.stat1Number}</span>
-              <span className="text-xs text-slate-400">{config.stat1Label}</span>
+          {/* Stats Bar - Positioned at bottom inside full page hero */}
+          <div className="pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
+            <div className="space-y-1">
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-white">{config.stat1Number}</span>
+              <span className="text-xs sm:text-sm text-slate-400 font-medium">{config.stat1Label}</span>
             </div>
-            <div>
-              <span className="block text-2xl sm:text-3xl font-black text-blue-400">{config.stat2Number}</span>
-              <span className="text-xs text-slate-400">{config.stat2Label}</span>
+            <div className="space-y-1">
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-blue-400">{config.stat2Number}</span>
+              <span className="text-xs sm:text-sm text-slate-400 font-medium">{config.stat2Label}</span>
             </div>
-            <div>
-              <span className="block text-2xl sm:text-3xl font-black text-emerald-400">{config.stat3Number}</span>
-              <span className="text-xs text-slate-400">{config.stat3Label}</span>
+            <div className="space-y-1">
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-emerald-400">{config.stat3Number}</span>
+              <span className="text-xs sm:text-sm text-slate-400 font-medium">{config.stat3Label}</span>
             </div>
-            <div>
-              <span className="block text-2xl sm:text-3xl font-black text-amber-400">{config.stat4Number}</span>
-              <span className="text-xs text-slate-400">{config.stat4Label}</span>
+            <div className="space-y-1">
+              <span className="block text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400">{config.stat4Number}</span>
+              <span className="text-xs sm:text-sm text-slate-400 font-medium">{config.stat4Label}</span>
             </div>
           </div>
         </div>
