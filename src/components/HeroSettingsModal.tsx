@@ -157,10 +157,25 @@ export const HeroSettingsModal: React.FC<HeroSettingsModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1">
-                <Type className="w-3.5 h-3.5 text-blue-500" />
-                <span>Judul Utama (Heading Hero)</span>
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                  <Type className="w-3.5 h-3.5 text-blue-500" />
+                  <span>Judul Utama (Heading Hero)</span>
+                </label>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-slate-400 font-medium">Ukuran Font:</span>
+                  <select
+                    value={config.titleFontSize || 'text-3xl sm:text-5xl lg:text-6xl'}
+                    onChange={(e) => handleChange('titleFontSize', e.target.value)}
+                    className="text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 outline-none cursor-pointer"
+                  >
+                    <option value="text-2xl sm:text-4xl lg:text-5xl">Kecil (2XL)</option>
+                    <option value="text-3xl sm:text-5xl lg:text-6xl">Normal (3XL)</option>
+                    <option value="text-4xl sm:text-6xl lg:text-7xl">Besar (4XL)</option>
+                    <option value="text-5xl sm:text-7xl lg:text-8xl">Ekstra Besar (5XL)</option>
+                  </select>
+                </div>
+              </div>
               <textarea
                 value={config.title}
                 onChange={(e) => handleChange('title', e.target.value)}
@@ -172,10 +187,25 @@ export const HeroSettingsModal: React.FC<HeroSettingsModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5 flex items-center gap-1">
-                <AlignLeft className="w-3.5 h-3.5 text-blue-500" />
-                <span>Deskripsi Lengkap Hero</span>
-              </label>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                  <AlignLeft className="w-3.5 h-3.5 text-blue-500" />
+                  <span>Deskripsi Lengkap Hero</span>
+                </label>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] text-slate-400 font-medium">Ukuran Font:</span>
+                  <select
+                    value={config.descFontSize || 'text-base sm:text-lg lg:text-xl'}
+                    onChange={(e) => handleChange('descFontSize', e.target.value)}
+                    className="text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 outline-none cursor-pointer"
+                  >
+                    <option value="text-xs sm:text-sm lg:text-base">Kecil (Small)</option>
+                    <option value="text-sm sm:text-base lg:text-lg">Sedang (Medium)</option>
+                    <option value="text-base sm:text-lg lg:text-xl">Normal (Large)</option>
+                    <option value="text-lg sm:text-xl lg:text-2xl">Besar (Extra Large)</option>
+                  </select>
+                </div>
+              </div>
               <textarea
                 value={config.description}
                 onChange={(e) => handleChange('description', e.target.value)}

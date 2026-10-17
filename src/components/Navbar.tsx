@@ -9,7 +9,8 @@ import {
   CheckCircle2,
   Settings,
   Sun,
-  Moon
+  Moon,
+  Phone
 } from 'lucide-react';
 import { UserProfile } from '../types/auth';
 import { Theme } from '../utils/theme';
@@ -23,6 +24,7 @@ interface NavbarProps {
   onOpenSettings?: () => void;
   theme?: Theme;
   onToggleTheme?: () => void;
+  onOpenContact?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -34,6 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSettings,
   theme,
   onToggleTheme,
+  onOpenContact,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
@@ -111,6 +114,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span>Rekap Nilai Siswa</span>
               </button>
             )}
+
+            <button
+              onClick={onOpenContact}
+              className="flex items-center gap-1.5 py-1.5 transition-colors whitespace-nowrap shrink-0 cursor-pointer text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+            >
+              <Phone className="w-4 h-4 text-blue-500" />
+              <span>Kontak</span>
+            </button>
           </nav>
         )}
 
@@ -250,6 +261,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>Rekap Guru</span>
             </button>
           )}
+
+          <button
+            onClick={onOpenContact}
+            className="py-1 px-2 whitespace-nowrap cursor-pointer text-slate-500 flex items-center gap-1"
+          >
+            <Phone className="w-3.5 h-3.5 text-blue-500" />
+            <span>Kontak</span>
+          </button>
         </div>
       )}
     </header>

@@ -10,6 +10,8 @@ export interface HeroConfig {
   stat3Label: string;
   stat4Number: string;
   stat4Label: string;
+  titleFontSize: string; // e.g. 'text-3xl sm:text-5xl lg:text-6xl'
+  descFontSize: string;  // e.g. 'text-base sm:text-lg lg:text-xl'
 }
 
 export const DEFAULT_HERO_CONFIG: HeroConfig = {
@@ -24,9 +26,11 @@ export const DEFAULT_HERO_CONFIG: HeroConfig = {
   stat3Label: 'Diagram Bebas Lisensi',
   stat4Number: 'Real-Time',
   stat4Label: 'Skor & Pembahasan',
+  titleFontSize: 'text-3xl sm:text-5xl lg:text-6xl',
+  descFontSize: 'text-base sm:text-lg lg:text-xl',
 };
 
-const STORAGE_HERO_KEY = 'tka_hero_config_v2';
+const STORAGE_HERO_KEY = 'tka_hero_config_v3';
 
 export function getStoredHeroConfig(): HeroConfig {
   try {

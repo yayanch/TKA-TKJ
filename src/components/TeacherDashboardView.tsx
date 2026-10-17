@@ -30,7 +30,8 @@ import {
   Key,
   Calendar,
   BadgeCheck,
-  Edit3
+  Edit3,
+  Phone
 } from 'lucide-react';
 import { TeacherClassOverview, TeacherStudentSummary, UserProfile } from '../types/auth';
 import { 
@@ -45,12 +46,14 @@ interface TeacherDashboardViewProps {
   currentUser?: UserProfile | null;
   onRefresh?: () => void;
   onOpenHeroSettings?: () => void;
+  onOpenContactSettings?: () => void;
 }
 
 export const TeacherDashboardView: React.FC<TeacherDashboardViewProps> = ({ 
   currentUser, 
   onRefresh, 
-  onOpenHeroSettings 
+  onOpenHeroSettings,
+  onOpenContactSettings 
 }) => {
   const [data, setData] = useState<TeacherClassOverview | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -306,6 +309,17 @@ export const TeacherDashboardView: React.FC<TeacherDashboardViewProps> = ({
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 self-start md:self-center shrink-0">
+            {!isStudent && onOpenContactSettings && (
+              <button
+                onClick={onOpenContactSettings}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-blue-900 dark:text-blue-200 bg-blue-100 dark:bg-blue-950/80 hover:bg-blue-200 border border-blue-300 dark:border-blue-800 shadow-xs transition-colors cursor-pointer"
+                title="Pengaturan Kontak Bantuan"
+              >
+                <Phone className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span>Pengaturan Kontak</span>
+              </button>
+            )}
+
             {!isStudent && onOpenHeroSettings && (
               <button
                 onClick={onOpenHeroSettings}

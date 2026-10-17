@@ -74,9 +74,9 @@ export const HomeOverviewView: React.FC<HomeOverviewViewProps> = ({
 
   // Public Hero Banner (Only shown for guest visitors before login - Full Page without space)
   return (
-    <div className="-mx-4 sm:-mx-6 lg:-mx-8 -mt-6 sm:-mt-8 min-h-[calc(100vh-4rem)] flex flex-col justify-center">
+    <div className="w-full min-h-[calc(100vh-4rem)] flex flex-col justify-center">
       {/* Full Page Hero Section */}
-      <section className="relative overflow-hidden w-full min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white p-6 sm:p-12 lg:p-16 flex flex-col justify-center shadow-2xl">
+      <section className="relative overflow-hidden w-full min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white px-4 sm:px-8 lg:px-16 py-12 flex flex-col justify-center shadow-2xl">
         {/* Subtle Decorative Background Circles */}
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/3 -mb-20 w-[450px] h-[450px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
@@ -98,11 +98,11 @@ export const HomeOverviewView: React.FC<HomeOverviewViewProps> = ({
             <span>{config.badge}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight sm:leading-tight max-w-5xl">
+          <h1 className={`${config.titleFontSize || 'text-3xl sm:text-5xl lg:text-6xl'} font-black tracking-tight leading-tight sm:leading-tight max-w-5xl`}>
             {config.title}
           </h1>
 
-          <p className="text-base sm:text-lg lg:text-xl text-slate-300 leading-relaxed max-w-4xl whitespace-pre-line font-normal">
+          <p className={`${config.descFontSize || 'text-base sm:text-lg lg:text-xl'} text-slate-300 leading-relaxed max-w-4xl whitespace-pre-line font-normal`}>
             {config.description}
           </p>
 

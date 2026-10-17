@@ -9,7 +9,10 @@ import { TeacherDashboardView } from './components/TeacherDashboardView';
 import { AuthModal } from './components/AuthModal';
 import { AccountSettingsModal } from './components/AccountSettingsModal';
 import { HeroSettingsModal } from './components/HeroSettingsModal';
+import { ContactSettingsModal } from './components/ContactSettingsModal';
+import { ContactModal } from './components/ContactModal';
 import { HeroConfig, getStoredHeroConfig } from './utils/heroStorage';
+import { ContactConfig, getStoredContactConfig } from './utils/contactStorage';
 import { Theme, getStoredTheme, applyTheme } from './utils/theme';
 
 import { 
@@ -150,7 +153,10 @@ export default function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isHeroSettingsOpen, setIsHeroSettingsOpen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isContactSettingsOpen, setIsContactSettingsOpen] = useState(false);
   const [heroConfig, setHeroConfig] = useState<HeroConfig>(() => getStoredHeroConfig());
+  const [contactConfig, setContactConfig] = useState<ContactConfig>(() => getStoredContactConfig());
   const [authModalMode, setAuthModalMode] = useState<'register' | 'login'>('register');
 
   // Synchronous refs to prevent stale closure during popstate & back button navigation
@@ -720,10 +726,11 @@ export default function App() {
         }}
         theme={theme}
         onToggleTheme={handleToggleTheme}
+        onOpenContact={() => setIsContactModalOpen(true)}
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+      <main className={`flex-1 w-full mx-auto ${!currentUser ? 'p-0 max-w-none' : 'max-w-7xl px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8'}`}>
         {/* Render Active Quiz Session if ongoing */}
         {currentSession && !currentSession.isFinished ? (
           <QuizSessionView
@@ -772,6 +779,7 @@ export default function App() {
                   currentUser={currentUser} 
                   onRefresh={refreshProgress} 
                   onOpenHeroSettings={() => setIsHeroSettingsOpen(true)}
+                  onOpenContactSettings={() => setIsContactSettingsOpen(true)}
                 />
               ) : (
                 <DashboardView
@@ -873,6 +881,23 @@ export default function App() {
         onClose={() => setIsHeroSettingsOpen(false)}
         currentUser={currentUser}
         onConfigChange={(newConfig) => setHeroConfig(newConfig)}
+      />
+
+      {/* Contact Info Modal */}
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
+        currentUser={currentUser}
+        onOpenSettings={() => setIsContactSettingsOpen(true)}
+        contactConfig={contactConfig}
+      />
+
+      {/* Contact Settings Modal (Admin Only) */}
+      <ContactSettingsModal
+        isOpen={isContactSettingsOpen}
+        onClose={() => setIsContactSettingsOpen(false)}
+        currentUser={currentUser}
+        onConfigChange={(newConfig) => setContactConfig(newConfig)}
       />
 
       {/* Clean Footer */}
