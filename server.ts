@@ -438,6 +438,15 @@ async function initDatabase() {
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     `);
 
+    await conn.query(`
+      CREATE TABLE IF NOT EXISTS app_settings (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        setting_key VARCHAR(64) NOT NULL UNIQUE,
+        setting_value LONGTEXT NOT NULL,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+    `);
+
     // Check if users table is empty
     const [userCountRows]: any = await conn.query('SELECT COUNT(*) as count FROM users');
     const userCount = userCountRows[0]?.count || 0;
@@ -1392,6 +1401,51 @@ app.get('/api/teacher/overview', async (req: Request, res: Response) => {
   } catch (err: any) {
     console.error('Teacher overview error:', err);
     return res.status(500).json({ error: err.message });
+  }
+});
+
+// Settings API for cross-device persistence
+const memorySettingsStore = new Map<string, any>();
+
+app.get('/api/settings/:key', async (req: Request, res: Response) => {
+  try {
+    const { key } = req.params;
+    if (isMySqlConnected && pool) {
+      const [rows]: any = await pool.query('SELECT setting_value FROM app_settings WHERE setting_key = ?', [key]);
+      if (rows && rows.length > 0) {
+        return res.json({ success: true, value: JSON.parse(rows[0].setting_value) });
+      }
+      return res.status(404).json({ success: false, error: 'Setting not found' });
+    } else {
+      const val = memorySettingsStore.get(key);
+      if (val !== undefined) {
+        return res.json({ success: true, value: val });
+      }
+      return res.status(404).json({ success: false, error: 'Setting not found' });
+    }
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.post('/api/settings/:key', async (req: Request, res: Response) => {
+  try {
+    const { key } = req.params;
+    const value = req.body;
+    const jsonStr = JSON.stringify(value);
+
+    if (isMySqlConnected && pool) {
+      await pool.query(
+        'INSERT INTO app_settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = ?',
+        [key, jsonStr, jsonStr]
+      );
+    } else {
+      memorySettingsStore.set(key, value);
+    }
+
+    return res.json({ success: true, message: 'Settings saved successfully' });
+  } catch (err: any) {
+    return res.status(500).json({ success: false, error: err.message });
   }
 });
 

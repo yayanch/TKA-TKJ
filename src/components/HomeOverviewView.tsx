@@ -74,9 +74,9 @@ export const HomeOverviewView: React.FC<HomeOverviewViewProps> = ({
 
   // Public Hero Banner (Only shown for guest visitors before login - Full Page without space)
   return (
-    <div className="w-full min-h-[calc(100vh-4rem)] flex flex-col justify-center">
+    <div className="w-full min-h-[calc(100vh-4rem)] flex flex-col justify-center overflow-x-hidden">
       {/* Full Page Hero Section */}
-      <section className="relative overflow-hidden w-full min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white px-4 sm:px-8 lg:px-16 py-12 flex flex-col justify-center shadow-2xl">
+      <section className="relative overflow-hidden w-full min-h-[calc(100vh-4rem)] bg-linear-to-br from-slate-900 via-blue-950 to-slate-900 text-white px-4 sm:px-8 lg:px-16 py-12 flex flex-col justify-center shadow-2xl box-border">
         {/* Subtle Decorative Background Circles */}
         <div className="absolute top-0 right-0 -mt-20 -mr-20 w-[500px] h-[500px] bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/3 -mb-20 w-[450px] h-[450px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />

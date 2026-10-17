@@ -12,9 +12,17 @@ import { HeroSettingsModal } from './components/HeroSettingsModal';
 import { ContactSettingsModal } from './components/ContactSettingsModal';
 import { ContactModal } from './components/ContactModal';
 import { BrandingSettingsModal } from './components/BrandingSettingsModal';
-import { HeroConfig, getStoredHeroConfig } from './utils/heroStorage';
-import { ContactConfig, getStoredContactConfig } from './utils/contactStorage';
-import { BrandingConfig, getStoredBrandingConfig, applyBrandingToDOM } from './utils/brandingStorage';
+import { HeroConfig, DEFAULT_HERO_CONFIG } from './utils/heroStorage';
+import { ContactConfig, DEFAULT_CONTACT_CONFIG } from './utils/contactStorage';
+import { BrandingConfig, DEFAULT_BRANDING_CONFIG, applyBrandingToDOM } from './utils/brandingStorage';
+import { 
+  fetchHeroConfig, 
+  saveHeroConfigToDB, 
+  fetchContactConfig, 
+  saveContactConfigToDB, 
+  fetchBrandingConfig, 
+  saveBrandingConfigToDB 
+} from './services/settingsSync';
 import { Theme, getStoredTheme, applyTheme } from './utils/theme';
 
 import { 
@@ -157,9 +165,9 @@ export default function App() {
   const [isHeroSettingsOpen, setIsHeroSettingsOpen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isContactSettingsOpen, setIsContactSettingsOpen] = useState(false);
-  const [heroConfig, setHeroConfig] = useState<HeroConfig>(() => getStoredHeroConfig());
-  const [contactConfig, setContactConfig] = useState<ContactConfig>(() => getStoredContactConfig());
-  const [brandingConfig, setBrandingConfig] = useState<BrandingConfig>(() => getStoredBrandingConfig());
+  const [heroConfig, setHeroConfig] = useState<HeroConfig>(DEFAULT_HERO_CONFIG);
+  const [contactConfig, setContactConfig] = useState<ContactConfig>(DEFAULT_CONTACT_CONFIG);
+  const [brandingConfig, setBrandingConfig] = useState<BrandingConfig>(DEFAULT_BRANDING_CONFIG);
   const [isBrandingSettingsOpen, setIsBrandingSettingsOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'register' | 'login'>('register');
 
@@ -329,6 +337,31 @@ export default function App() {
     window.addEventListener('popstate', handlePopState);
     return () => {
       window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
+  // Fetch configs from database on mount for cross-device persistence
+  useEffect(() => {
+    let isMounted = true;
+    async function loadDbConfigs() {
+      try {
+        const [hCfg, cCfg, bCfg] = await Promise.all([
+          fetchHeroConfig(),
+          fetchContactConfig(),
+          fetchBrandingConfig(),
+        ]);
+        if (isMounted) {
+          if (hCfg) setHeroConfig(hCfg);
+          if (cCfg) setContactConfig(cCfg);
+          if (bCfg) setBrandingConfig(bCfg);
+        }
+      } catch (e) {
+        console.warn('Error loading remote settings from DB:', e);
+      }
+    }
+    loadDbConfigs();
+    return () => {
+      isMounted = false;
     };
   }, []);
 
@@ -889,7 +922,10 @@ export default function App() {
         isOpen={isHeroSettingsOpen}
         onClose={() => setIsHeroSettingsOpen(false)}
         currentUser={currentUser}
-        onConfigChange={(newConfig) => setHeroConfig(newConfig)}
+        onConfigChange={(newConfig) => {
+          setHeroConfig(newConfig);
+          saveHeroConfigToDB(newConfig);
+        }}
       />
 
       {/* Contact Info Modal */}
@@ -906,7 +942,10 @@ export default function App() {
         isOpen={isContactSettingsOpen}
         onClose={() => setIsContactSettingsOpen(false)}
         currentUser={currentUser}
-        onConfigChange={(newConfig) => setContactConfig(newConfig)}
+        onConfigChange={(newConfig) => {
+          setContactConfig(newConfig);
+          saveContactConfigToDB(newConfig);
+        }}
       />
 
       {/* Branding & Logo Settings Modal (Admin Only) */}
@@ -914,7 +953,10 @@ export default function App() {
         isOpen={isBrandingSettingsOpen}
         onClose={() => setIsBrandingSettingsOpen(false)}
         currentUser={currentUser}
-        onConfigChange={(newConfig) => setBrandingConfig(newConfig)}
+        onConfigChange={(newConfig) => {
+          setBrandingConfig(newConfig);
+          saveBrandingConfigToDB(newConfig);
+        }}
       />
 
       {/* Clean Footer */}

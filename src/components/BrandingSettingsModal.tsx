@@ -132,34 +132,88 @@ export const BrandingSettingsModal: React.FC<BrandingSettingsModalProps> = ({
         <form onSubmit={handleSave} className="space-y-4">
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-              <span>Teks Singkat Logo Header (Maksimal 2-3 Huruf / Emoji)</span>
+              <Globe className="w-3.5 h-3.5 text-blue-500" />
+              <span>Favicon (Upload atau Masukkan URL)</span>
             </label>
-            <input
-              type="text"
-              required
-              maxLength={5}
-              value={config.logoText}
-              onChange={(e) => handleChange('logoText', e.target.value)}
-              className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white font-bold"
-              placeholder="Contoh: TK atau 🌐"
-            />
-            <span className="text-[10px] text-slate-400 block">Huruf atau simbol ini akan tampil di kotak biru logo navigasi header.</span>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                value={config.faviconUrl}
+                onChange={(e) => handleChange('faviconUrl', e.target.value)}
+                className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
+                placeholder="https://contoh.com/favicon.png"
+              />
+              <label className="px-3.5 py-2.5 text-xs font-semibold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center">
+                <ImageIcon className="w-4 h-4 mr-1.5" />
+                Upload
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/png,image/x-icon,image/vnd.microsoft.icon"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        handleChange('faviconUrl', reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              </label>
+            </div>
+            <span className="text-[10px] text-slate-400 block">Upload file lokal (.png/.ico) atau masukkan URL gambar publik.</span>
           </div>
 
           <div className="space-y-1.5">
             <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <Globe className="w-3.5 h-3.5 text-blue-500" />
-              <span>URL Gambar Favicon (Ikon Tab Browser / .ico / .png)</span>
+              <ImageIcon className="w-3.5 h-3.5 text-blue-500" />
+              <span>Logo Header (Upload atau Masukkan URL)</span>
+            </label>
+            <div className="flex gap-2">
+              <input
+                type="url"
+                value={config.logoUrl}
+                onChange={(e) => handleChange('logoUrl', e.target.value)}
+                className="flex-1 px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
+                placeholder="https://contoh.com/logo.png"
+              />
+              <label className="px-3.5 py-2.5 text-xs font-semibold bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center">
+                <ImageIcon className="w-4 h-4 mr-1.5" />
+                Upload
+                <input
+                  type="file"
+                  className="hidden"
+                  accept="image/png,image/jpeg,image/svg+xml"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        handleChange('logoUrl', reader.result as string);
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  }}
+                />
+              </label>
+            </div>
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-blue-500" />
+              <span>Icon Logo (FontAwesome Class, e.g., 'fas fa-graduation-cap')</span>
             </label>
             <input
-              type="url"
-              value={config.faviconUrl}
-              onChange={(e) => handleChange('faviconUrl', e.target.value)}
+              type="text"
+              value={config.logoIcon}
+              onChange={(e) => handleChange('logoIcon', e.target.value)}
               className="w-full px-3.5 py-2.5 text-xs sm:text-sm bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
-              placeholder="https://contoh.com/favicon.png (Opsional)"
+              placeholder="fas fa-rocket"
             />
-            <span className="text-[10px] text-slate-400 block">Kosongkan untuk menggunakan ikon bawaan. Masukkan URL langsung gambar publik (.png/.ico).</span>
+            <span className="text-[10px] text-slate-400 block">Masukkan class FontAwesome (pastikan sudah termuat).</span>
           </div>
 
           <div className="space-y-1.5">

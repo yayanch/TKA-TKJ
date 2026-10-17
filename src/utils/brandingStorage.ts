@@ -2,6 +2,8 @@ export interface BrandingConfig {
   appName: string;
   appShortName: string;
   logoText: string;
+  logoUrl: string;
+  logoIcon: string; // Add this
   faviconUrl: string;
   headerBadge: string;
 }
@@ -12,6 +14,8 @@ export const DEFAULT_BRANDING_CONFIG: BrandingConfig = {
   appName: 'Simulasi TKA SMK TJKT - Bank 400 Soal & Pembahasan',
   appShortName: 'TKA SMK TJKT',
   logoText: 'TK',
+  logoUrl: '',
+  logoIcon: '', // Default empty
   faviconUrl: '',
   headerBadge: 'Bank 400 Soal & Pembahasan',
 };
@@ -53,6 +57,12 @@ export function applyBrandingToDOM(config: BrandingConfig): void {
         document.getElementsByTagName('head')[0].appendChild(link);
       }
       link.href = config.faviconUrl;
+    }
+    
+    // Also update logo image if it exists
+    if (config.logoUrl) {
+      const logoImg = document.getElementById('navbar-logo-img') as HTMLImageElement;
+      if (logoImg) logoImg.src = config.logoUrl;
     }
   } catch (e) {
     console.error('Error applying branding to DOM:', e);
