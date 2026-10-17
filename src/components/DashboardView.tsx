@@ -762,12 +762,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
-                  {currentUser ? (
-                    <div className="text-center text-[11px] font-semibold text-slate-500 bg-slate-100 dark:bg-slate-800 py-2 px-3 rounded-xl">
-                      Siswa Terdaftar di Database MySQL
-                    </div>
-                  ) : (
+                {!currentUser && (
+                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
                     <button
                       onClick={() => onOpenAuth?.('register')}
                       className="w-full py-2 px-3 bg-purple-600 hover:bg-purple-700 text-white text-xs font-extrabold rounded-xl transition-colors cursor-pointer flex items-center justify-center gap-1.5 shadow-xs"
@@ -775,8 +771,8 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
                       <User className="w-3.5 h-3.5" />
                       <span>Daftar Akun Sekarang</span>
                     </button>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
             </div>
           </section>

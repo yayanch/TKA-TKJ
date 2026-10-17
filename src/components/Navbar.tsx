@@ -7,9 +7,12 @@ import {
   User, 
   LogOut, 
   CheckCircle2,
-  Settings
+  Settings,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { UserProfile } from '../types/auth';
+import { Theme } from '../utils/theme';
 
 interface NavbarProps {
   currentTab: 'home' | 'dashboard' | 'learning' | 'bank' | 'stats' | 'teacher';
@@ -18,6 +21,8 @@ interface NavbarProps {
   onOpenAuth: (mode: 'register' | 'login') => void;
   onLogout: () => void;
   onOpenSettings?: () => void;
+  theme?: Theme;
+  onToggleTheme?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -27,6 +32,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAuth,
   onLogout,
   onOpenSettings,
+  theme,
+  onToggleTheme,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
@@ -107,8 +114,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           </nav>
         )}
 
-        {/* Zone 3: User Auth (SEBELUM LOGIN: HANYA DAFTAR SISWA DAN MASUK) */}
+        {/* Zone 3: User Auth & Theme Switch */}
         <div className="flex items-center gap-2.5 shrink-0">
+          {/* Dark Mode Switch Button */}
+          {onToggleTheme && (
+            <button
+              type="button"
+              onClick={onToggleTheme}
+              className="p-2 rounded-xl text-slate-500 dark:text-slate-300 hover:text-amber-500 dark:hover:text-amber-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer border border-slate-200 dark:border-slate-700/80 shadow-2xs"
+              title={theme === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
+              aria-label={theme === 'dark' ? 'Beralih ke Mode Terang' : 'Beralih ke Mode Gelap'}
+            >
+              {theme === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400" />
+              ) : (
+                <Moon className="w-4 h-4 text-slate-600" />
+              )}
+            </button>
+          )}
+
           {currentUser ? (
             <div className="flex items-center gap-2.5">
               <div 

@@ -8,7 +8,19 @@
     <meta property="og:title" content="Simulasi TKA SMK TJKT - Bank 400 Soal & Pembahasan" />
     <meta property="og:description" content="Aplikasi latihan dan simulasi interaktif 400 soal TKA SMK Teknik Jaringan Komputer dan Telekomunikasi (8 Minggu x 50 soal) dengan skor real-time, pembahasan komprehensif, dan pelacakan progres belajar." />
     <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <script>
+      (function() {
+        try {
+          var stored = localStorage.getItem('tka_app_theme_v1');
+          var isDark = stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

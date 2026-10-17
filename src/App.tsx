@@ -10,6 +10,7 @@ import { AuthModal } from './components/AuthModal';
 import { AccountSettingsModal } from './components/AccountSettingsModal';
 import { HeroSettingsModal } from './components/HeroSettingsModal';
 import { HeroConfig, getStoredHeroConfig } from './utils/heroStorage';
+import { Theme, getStoredTheme, applyTheme } from './utils/theme';
 
 import { 
   getQuestionsForWeek, 
@@ -128,6 +129,21 @@ export default function App() {
   const [sessionQuestions, setSessionQuestions] = useState<Question[]>([]);
   const [bankSelectedWeek, setBankSelectedWeek] = useState<number>(0);
   const [learningSelectedWeek, setLearningSelectedWeek] = useState<number>(1);
+
+  // Theme & Dark Mode State
+  const [theme, setTheme] = useState<Theme>(() => getStoredTheme());
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [theme]);
+
+  const handleToggleTheme = useCallback(() => {
+    setTheme(prev => {
+      const nextTheme = prev === 'dark' ? 'light' : 'dark';
+      applyTheme(nextTheme);
+      return nextTheme;
+    });
+  }, []);
 
   // Authentication & MySQL User State
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(() => getStoredUser());
@@ -702,6 +718,8 @@ export default function App() {
           setIsSettingsOpen(true);
           navigateState({ isSettingsOpen: true }, { skipScroll: true });
         }}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Container */}
@@ -871,8 +889,6 @@ export default function App() {
             <span>Sistem Skor Real-Time</span>
             <span aria-hidden="true">·</span>
             <span>Pembahasan Otomatis Sesi</span>
-            <span aria-hidden="true">·</span>
-            <span>Database MySQL via .env</span>
             <span aria-hidden="true">·</span>
             <span>Pelacakan Progres Terpadu</span>
           </div>
