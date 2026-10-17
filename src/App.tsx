@@ -11,8 +11,10 @@ import { AccountSettingsModal } from './components/AccountSettingsModal';
 import { HeroSettingsModal } from './components/HeroSettingsModal';
 import { ContactSettingsModal } from './components/ContactSettingsModal';
 import { ContactModal } from './components/ContactModal';
+import { BrandingSettingsModal } from './components/BrandingSettingsModal';
 import { HeroConfig, getStoredHeroConfig } from './utils/heroStorage';
 import { ContactConfig, getStoredContactConfig } from './utils/contactStorage';
+import { BrandingConfig, getStoredBrandingConfig, applyBrandingToDOM } from './utils/brandingStorage';
 import { Theme, getStoredTheme, applyTheme } from './utils/theme';
 
 import { 
@@ -157,7 +159,13 @@ export default function App() {
   const [isContactSettingsOpen, setIsContactSettingsOpen] = useState(false);
   const [heroConfig, setHeroConfig] = useState<HeroConfig>(() => getStoredHeroConfig());
   const [contactConfig, setContactConfig] = useState<ContactConfig>(() => getStoredContactConfig());
+  const [brandingConfig, setBrandingConfig] = useState<BrandingConfig>(() => getStoredBrandingConfig());
+  const [isBrandingSettingsOpen, setIsBrandingSettingsOpen] = useState(false);
   const [authModalMode, setAuthModalMode] = useState<'register' | 'login'>('register');
+
+  useEffect(() => {
+    applyBrandingToDOM(brandingConfig);
+  }, [brandingConfig]);
 
   // Synchronous refs to prevent stale closure during popstate & back button navigation
   const isPopstateNavigatingRef = useRef(false);
@@ -780,6 +788,7 @@ export default function App() {
                   onRefresh={refreshProgress} 
                   onOpenHeroSettings={() => setIsHeroSettingsOpen(true)}
                   onOpenContactSettings={() => setIsContactSettingsOpen(true)}
+                  onOpenBrandingSettings={() => setIsBrandingSettingsOpen(true)}
                 />
               ) : (
                 <DashboardView
@@ -898,6 +907,14 @@ export default function App() {
         onClose={() => setIsContactSettingsOpen(false)}
         currentUser={currentUser}
         onConfigChange={(newConfig) => setContactConfig(newConfig)}
+      />
+
+      {/* Branding & Logo Settings Modal (Admin Only) */}
+      <BrandingSettingsModal
+        isOpen={isBrandingSettingsOpen}
+        onClose={() => setIsBrandingSettingsOpen(false)}
+        currentUser={currentUser}
+        onConfigChange={(newConfig) => setBrandingConfig(newConfig)}
       />
 
       {/* Clean Footer */}

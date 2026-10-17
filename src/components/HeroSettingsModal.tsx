@@ -169,10 +169,11 @@ export const HeroSettingsModal: React.FC<HeroSettingsModalProps> = ({
                     onChange={(e) => handleChange('titleFontSize', e.target.value)}
                     className="text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 outline-none cursor-pointer"
                   >
-                    <option value="text-2xl sm:text-4xl lg:text-5xl">Kecil (2XL)</option>
-                    <option value="text-3xl sm:text-5xl lg:text-6xl">Normal (3XL)</option>
-                    <option value="text-4xl sm:text-6xl lg:text-7xl">Besar (4XL)</option>
-                    <option value="text-5xl sm:text-7xl lg:text-8xl">Ekstra Besar (5XL)</option>
+                    <option value="text-xl sm:text-3xl lg:text-4xl">1. Sangat Kecil (Sangat Rapat)</option>
+                    <option value="text-2xl sm:text-4xl lg:text-5xl">2. Kecil (Compact)</option>
+                    <option value="text-3xl sm:text-5xl lg:text-6xl">3. Normal (Standar)</option>
+                    <option value="text-4xl sm:text-6xl lg:text-7xl">4. Besar (Bold Header)</option>
+                    <option value="text-5xl sm:text-7xl lg:text-8xl">5. Sangat Besar (Maksimal)</option>
                   </select>
                 </div>
               </div>
@@ -199,10 +200,11 @@ export const HeroSettingsModal: React.FC<HeroSettingsModalProps> = ({
                     onChange={(e) => handleChange('descFontSize', e.target.value)}
                     className="text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 outline-none cursor-pointer"
                   >
-                    <option value="text-xs sm:text-sm lg:text-base">Kecil (Small)</option>
-                    <option value="text-sm sm:text-base lg:text-lg">Sedang (Medium)</option>
-                    <option value="text-base sm:text-lg lg:text-xl">Normal (Large)</option>
-                    <option value="text-lg sm:text-xl lg:text-2xl">Besar (Extra Large)</option>
+                    <option value="text-xs sm:text-xs lg:text-sm">1. Sangat Kecil (Compact)</option>
+                    <option value="text-xs sm:text-sm lg:text-base">2. Kecil (Small)</option>
+                    <option value="text-sm sm:text-base lg:text-lg">3. Sedang (Medium)</option>
+                    <option value="text-base sm:text-lg lg:text-xl">4. Normal (Standard)</option>
+                    <option value="text-lg sm:text-xl lg:text-2xl">5. Besar (Extra Large)</option>
                   </select>
                 </div>
               </div>

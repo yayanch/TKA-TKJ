@@ -31,7 +31,8 @@ import {
   Calendar,
   BadgeCheck,
   Edit3,
-  Phone
+  Phone,
+  Image as ImageIcon
 } from 'lucide-react';
 import { TeacherClassOverview, TeacherStudentSummary, UserProfile } from '../types/auth';
 import { 
@@ -47,13 +48,15 @@ interface TeacherDashboardViewProps {
   onRefresh?: () => void;
   onOpenHeroSettings?: () => void;
   onOpenContactSettings?: () => void;
+  onOpenBrandingSettings?: () => void;
 }
 
 export const TeacherDashboardView: React.FC<TeacherDashboardViewProps> = ({ 
   currentUser, 
   onRefresh, 
   onOpenHeroSettings,
-  onOpenContactSettings 
+  onOpenContactSettings,
+  onOpenBrandingSettings
 }) => {
   const [data, setData] = useState<TeacherClassOverview | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -317,6 +320,17 @@ export const TeacherDashboardView: React.FC<TeacherDashboardViewProps> = ({
               >
                 <Phone className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span>Pengaturan Kontak</span>
+              </button>
+            )}
+
+            {!isStudent && onOpenBrandingSettings && (
+              <button
+                onClick={onOpenBrandingSettings}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-indigo-900 dark:text-indigo-200 bg-indigo-100 dark:bg-indigo-950/80 hover:bg-indigo-200 border border-indigo-300 dark:border-indigo-800 shadow-xs transition-colors cursor-pointer"
+                title="Pengaturan Logo & Favicon"
+              >
+                <ImageIcon className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <span>Pengaturan Logo</span>
               </button>
             )}
 

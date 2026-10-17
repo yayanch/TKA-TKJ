@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { UserProfile } from '../types/auth';
 import { Theme } from '../utils/theme';
+import { getStoredBrandingConfig } from '../utils/brandingStorage';
 
 interface NavbarProps {
   currentTab: 'home' | 'dashboard' | 'learning' | 'bank' | 'stats' | 'teacher';
@@ -38,6 +39,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme,
   onOpenContact,
 }) => {
+  const branding = getStoredBrandingConfig();
+
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
@@ -50,14 +53,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           title={currentUser ? 'Kembali ke Beranda' : 'Platform TKA SMK TJKT'}
         >
           <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-xs group-hover:bg-blue-700 transition-colors">
-            TK
+            {branding.logoText || 'TK'}
           </div>
           <div className="flex flex-col">
             <span className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-              TKA SMK TJKT
+              {branding.appShortName || 'TKA SMK TJKT'}
             </span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-              Bank 400 Soal & Pembahasan
+              {branding.headerBadge || 'Bank 400 Soal & Pembahasan'}
             </span>
           </div>
         </div>
