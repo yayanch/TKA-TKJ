@@ -69,7 +69,7 @@ export function applyBrandingToDOM(config: BrandingConfig): void {
 
     // Apply font style
     if (config.fontStyle) {
-      document.documentElement.className = document.documentElement.className.replace(/font-\w+/g, '');
+      document.documentElement.className = document.documentElement.className.replace(/font-(sans|serif|mono|inter|poppins|roboto)/g, '').trim();
       document.documentElement.classList.add(config.fontStyle);
     }
   } catch (e) {
